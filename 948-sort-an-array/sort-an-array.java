@@ -2,6 +2,15 @@ class Solution {
     // We have done this using Merge Sort
     // But also we will do this usind Heap Sort O(N Log N); 
 
+    //  PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    //     for (int num : nums) {
+    //         minHeap.add(num);
+    //     }
+    //     for (int i = 0; i < nums.length; i++) {
+    //         nums[i] = minHeap.poll();
+    //     }
+    //     return nums;
+
     public void merge(int nums[], int start, int mid, int end) {
         int n1 = mid - start + 1;
         int n2 = end - mid;
