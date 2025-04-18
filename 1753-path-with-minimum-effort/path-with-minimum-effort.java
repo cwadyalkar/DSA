@@ -10,10 +10,10 @@ class Solution {
     }
 
     public int minimumEffortPath(int[][] heights) {
-         int row = heights.length;
+        int row = heights.length;
         int col = heights[0].length;
 
-        int[][] directions = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        int[][] directions = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
         int[][] dist = new int[row][col];
 
         for (int[] arr : dist) {
