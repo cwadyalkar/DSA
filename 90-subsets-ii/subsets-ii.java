@@ -5,7 +5,7 @@ class Solution {
         backtrack(0,nums,new ArrayList<>(),result);
         return result;
     }
-
+// here i have to handle duplicate
     public void backtrack(int start, int nums[], List<Integer> tempList, List<List<Integer>> result) {
         result.add(new ArrayList<>(tempList));
         for (int i = start; i < nums.length; i++) {
