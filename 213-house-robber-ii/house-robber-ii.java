@@ -1,4 +1,5 @@
 class Solution {
+    //Same code for Question HouseRob1
     public int rob1(int[] nums) {
         int n = nums.length;
         int dp[] = new int[n + 1];
