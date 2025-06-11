@@ -27,5 +27,8 @@ class Solution {
         }
         dp[amount] = (min == Integer.MAX_VALUE) ? -1 : min;
         return dp[amount];
+
+
+        // have to re solve one more time
     }
 }
