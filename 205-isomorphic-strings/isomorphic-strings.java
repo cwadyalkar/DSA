@@ -1,29 +1,30 @@
 class Solution {
     public boolean isIsomorphic(String s, String t) {
-        HashMap<Character, Character> map = new HashMap<>();
-        // if length of the both array is not same then return false
         if (s.length() != t.length())
             return false;
-        // P A P E R -----> T I T L E
-
+        HashMap<Character, Character> map1 = new HashMap<>();
+        HashMap<Character, Character> map2 = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
-            char original = s.charAt(i);
-            char replacement = t.charAt(i);
+            char ch1 = s.charAt(i);
+            char ch2 = t.charAt(i);
 
-            if (!map.containsKey(original)) {
-                if (!map.containsValue(replacement)) {
-                    map.put(original, replacement);
-                } else {
+            if(!map1.containsKey(ch1)){
+                map1.put(ch1,ch2);
+            }else{
+                if(map1.get(ch1) != ch2){
                     return false;
                 }
-            } else {
-            // if both the original string is same but its replacement value is not same then return false
-                char charMap = map.get(original);
-                if (charMap != replacement)
+            }
+
+             if(!map2.containsKey(ch2)){
+                map2.put(ch2,ch1);
+            }else{
+                if(map2.get(ch2) != ch1){
                     return false;
+                }
             }
         }
-        // else return true;
         return true;
+
     }
 }
