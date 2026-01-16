@@ -1,17 +1,15 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        int count = 0;
-        int majorityElement = 0;
-        for(int num : nums){
-            if(count == 0){
-                majorityElement = num;
-            }
-            if(num == majorityElement){
-                count++;
-            }else{
-                count --;
+        int n = nums.length;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > n / 2) {
+                return entry.getKey();
             }
         }
-        return majorityElement;
+        return -1;
     }
 }
