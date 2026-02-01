@@ -16,20 +16,21 @@ public class Solution {
         }
         ListNode slow = head;
         ListNode fast = head;
-        while(fast != null && fast.next != null){
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
-            if(slow == fast){
-                ListNode m1 = head;
-                ListNode m2 = slow;
-                while(m1 != m2){
-                    m1 = m1.next;
-                    m2 = m2.next;
-                }
-                return m1;
-            }
-        }
 
+            if (slow == fast) {
+                
+                ListNode temp = head;
+                while(temp != slow){
+                    temp = temp.next;
+                    slow = slow.next;
+                }
+                return slow;
+            }
+
+        }
         return null;
     }
 }
