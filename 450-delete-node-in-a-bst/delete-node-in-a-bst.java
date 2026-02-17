@@ -1,59 +1,51 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
- * this.val = val;
- * this.left = left;
- * this.right = right;
- * }
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
 class Solution {
-    public TreeNode findPredecessor(TreeNode node) {
-        while (node.right != null) {
-            node = node.right;
+    public TreeNode findPredecessor(TreeNode root){
+        while(root.right != null){
+            root = root.right;
         }
-        return node;
+        return root;
     }
 
     public TreeNode deleteNode(TreeNode root, int key) {
         if(root == null){
-            return root;
+            return null;
         }
         if(key < root.val){
             root.left = deleteNode(root.left,key);
-        }
-        else if(key > root.val){
+        }else if(key > root.val){
             root.right = deleteNode(root.right,key);
-        }
-        else{
-        // For Deleting the Leaf Node
-        if(root.left == null && root.right == null){
-            return null;
-        }
+        }else{
+            if(root.left == null && root.right == null){
+                return null;
+            }
 
-        // For Deleting the Single Child Node
-        if(root.left == null){
-            return root.right;
-        }
-        else if(root.right == null){
-            return root.left;
-        }
-        else{
-            // For Deleting the Two Child Node
-            // Inorder Predecessor -> Largest Value in LeftMost Tree
+            if(root.left == null){
+                return root.right;
+            }
+            else if(root.right == null){
+                return root.left;
+            }else{
+                TreeNode predecessor = findPredecessor(root.left);
+                root.val = predecessor.val;
+                root.left = deleteNode(root.left,predecessor.val);
+            }
 
-            TreeNode node = findPredecessor(root.left);
-            root.val = node.val;
-            root.left = deleteNode(root.left,node.val);
-
-        }
-
+             
         }
 
         return root;
