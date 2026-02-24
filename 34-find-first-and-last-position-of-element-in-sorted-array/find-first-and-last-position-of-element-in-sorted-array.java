@@ -1,33 +1,34 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int ans[] = { -1, -1 };
-        int leftIndex = findIndex(nums, target, true);
-        int rightIndex = findIndex(nums, target, false);
-        ans[0] = leftIndex;
-        ans[1] = rightIndex;
-        return ans;
+       int first = searchOccurence(nums,target,true);
+       System.out.println(first);
+       int second = searchOccurence(nums,target,false);
+         System.out.println(second);
 
+       return new int[]{first,second};
     }
 
-    public int findIndex(int nums[], int target, boolean isLeft) {
-        int index = -1;
+    public int searchOccurence(int nums[],int target,boolean isFirstOccurence){
         int start = 0;
         int end = nums.length - 1;
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-            if (target < nums[mid]) {
-                end = mid - 1;
-            } else if (target > nums[mid]) {
-                start = mid + 1;
-            } else {
-                index = mid;
-                if (isLeft) {
+        int ans = -1;
+        while(start <= end){
+            int mid = start + (end - start)/2;
+            if(target == nums[mid]){
+                ans = mid;
+                if(isFirstOccurence){
                     end = mid - 1;
-                } else {
+                }else{
                     start = mid + 1;
                 }
+
+            }else if(target < nums[mid]){
+                end = mid - 1;
+            }else{
+                start = mid + 1;
             }
         }
-        return index;
+        return ans;
+
     }
 }
