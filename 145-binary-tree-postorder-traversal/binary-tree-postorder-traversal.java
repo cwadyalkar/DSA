@@ -15,17 +15,19 @@
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        dfs(root,list);
-        return list;
+        ArrayList<Integer> list = new ArrayList<>();
+        return dfs(root,list);
     }
-    
-    public void dfs(TreeNode root, List<Integer> list) {
-        if (root == null) {
-            return;
+
+      public List<Integer> dfs(TreeNode root,List<Integer> list){
+        if(root == null){
+            return list;
         }
-        dfs(root.left, list);
-        dfs(root.right, list);
+        
+        dfs(root.left,list);
+        dfs(root.right,list);
         list.add(root.val);
+
+        return list;
     }
 }
