@@ -14,24 +14,20 @@
  * }
  */
 class Solution {
-    public int dfs(TreeNode root){
-       if(root == null) return 0;
+    int valid = 1;
+    public boolean isBalanced(TreeNode root) {
+        getHeight(root);
+        return valid == 1;
+    }
+    public int getHeight(TreeNode root){
+        if(root == null) return 0;
+        
+        int leftSubtree = getHeight(root.left);
+        int rightSubtree = getHeight(root.right);
 
-        int leftSubtree = dfs(root.left);
-        if(leftSubtree == -1) return -1;
-
-        int rightSubtree = dfs(root.right);
-        if(rightSubtree == -1) return -1;
-
-        if(Math.abs(leftSubtree - rightSubtree) > 1){
-            return -1;
+       if(Math.abs(leftSubtree - rightSubtree) > 1) {
+            valid = 0;
         }
         return 1 + Math.max(leftSubtree,rightSubtree);
-
     }
-    public boolean isBalanced(TreeNode root) {
-        int balanced = dfs(root);
-        return balanced != -1 ? true : false;
-    }
-
 }
