@@ -15,16 +15,17 @@
  */
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        if(root == null){
-            return true;
-        }
-        return isMirror(root.left,root.right);
-
+        if(root == null) return false;
+        return dfs(root.left,root.right);
     }
-    public boolean isMirror(TreeNode l1 , TreeNode r1){
-        if(l1 == null && r1 == null) return true;
-        if(l1 == null || r1 == null) return false;
+    public boolean dfs(TreeNode p,TreeNode q){
+        if(p == null && q == null) return true;
+        if(p == null || q == null) return false;
 
-        return (l1.val == r1.val) && isMirror(l1.left,r1.right) && isMirror(l1.right,r1.left);
+        boolean sameValue = p.val == q.val;
+        boolean checkForLeftRight = dfs(p.left,q.right);
+        boolean checkForRightLeft = dfs(p.right,q.left);
+
+        return sameValue && checkForLeftRight && checkForRightLeft;
     }
 }
