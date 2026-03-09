@@ -1,34 +1,34 @@
 class Solution {
-    public int getMax(int piles[]) {
-        int max = Integer.MIN_VALUE;
-        for (int pile : piles) {
-            max = Math.max(pile, max);
-        }
-        return max;
-    }
-
-    public boolean canEatAll(int piles[], int mid, int h) {
-        long totalHours = 0;
-        for (int pile : piles) {
-            totalHours = totalHours + (pile + mid - 1) / mid;
-        }
-        return totalHours <= h;
-    }
-
     public int minEatingSpeed(int[] piles, int h) {
         int start = 1;
-        int end = getMax(piles);
-          int ans = end;
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-            if (canEatAll(piles,mid,h)) {
-                ans = mid;
-                end = mid-1;
-            } else {
+        int end = 0;
+        for(int pile : piles){
+            end = Math.max(end,pile);
+        }
+        int canEatInHour = -1;
+        while(start <= end){
+            int mid = start + (end - start)/2;
+
+            if(canEatBanana(piles,h,mid)){
+                canEatInHour = mid;
+                end = mid - 1;
+            }else{
                 start = mid + 1;
             }
         }
-        return ans;
+        return canEatInHour;
     }
 
+    public boolean canEatBanana(int piles[],int h,int speed){
+        int hour = 0;
+        for(int pile : piles){
+            hour = hour + (pile + speed - 1)/speed;
+            
+            if(hour > h){
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
