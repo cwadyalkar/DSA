@@ -1,21 +1,17 @@
 class Solution {
     public boolean isPalindrome(String s) {
-     String cleaned = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        System.out.println(cleaned); 
-        int left = 0;
-        int right = cleaned.length() - 1;
-
-    while(left <= right){
-        char leftChar = cleaned.charAt(left);
-        char rightChar = cleaned.charAt(right);
-        if(leftChar == rightChar){
-            left++;
-            right--;
-        }else{
-            return false;
+        String newStr = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        int i = 0;
+        int j = newStr.length() - 1;
+        while (i < j) {
+            char start = newStr.charAt(i);
+            char end = newStr.charAt(j);
+            if (start != end) {
+                return false;
+            }
+            i++;
+            j--;
         }
-    } 
-      return true;
+        return true;
     }
-
 }
