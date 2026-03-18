@@ -1,31 +1,28 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        int start = 0;
-        int end = s.length() - 1;
-       
-        while(start <= end){
-            char chStart = s.charAt(start);
-            char chEnd = s.charAt(end);
-            if(chStart == chEnd){
-                start++;
-                end--;
+        int i = 0;
+        int j = s.length() - 1;
+
+        while(i < j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
             }else{
-                return isValidPalindrome(s,start+1,end) || isValidPalindrome(s,start,end-1); 
+                return isPalindrome(s,i+1,j) || isPalindrome(s,i,j-1);
             }
         }
         return true;
     }
-    public boolean isValidPalindrome(String s,int start,int end){
-        while(start <= end){
-            char chStart = s.charAt(start);
-            char chEnd = s.charAt(end);
-            if(chStart == chEnd){
-                start++;
-                end--;
-            }else{
+
+    public boolean isPalindrome(String s,int i,int j){
+        while(i < j){
+            if(s.charAt(i) != s.charAt(j)){
                 return false;
             }
+            i++;
+            j--;
         }
         return true;
     }
+
 }
