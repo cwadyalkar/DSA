@@ -1,39 +1,41 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Queue<Integer> queue = new LinkedList<>();
-        List<List<Integer>> adj = new ArrayList<>();
-        int indegre[] = new int[numCourses];
-
+        List<List<Integer>> graph = new ArrayList<>();
+        boolean visited[] = new boolean[numCourses];
+        boolean recStack[] = new boolean[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            adj.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
-
-        for (int edge[] : prerequisites) {
-            int course = edge[0];
-            int prerequisite = edge[1];
-            adj.get(prerequisite).add(course);
-            indegre[course]++;
-
+        for (int courses[] : prerequisites) {
+            int u = courses[0];
+            int v = courses[1];
+            graph.get(v).add(u);
         }
         for (int i = 0; i < numCourses; i++) {
-            if (indegre[i] == 0) {
-                queue.offer(i);
-            }
-
-        }
-        int count = 0;
-        while(!queue.isEmpty()){
-            int node = queue.poll();
-            count++;
-            for(int neighbour : adj.get(node)){
-                indegre[neighbour]--;
-                if(indegre[neighbour] == 0){
-                    queue.offer(neighbour);
+            if (!visited[i]) {
+                if (dfs(graph, i, visited, recStack)) {
+                    return false;
                 }
             }
-
         }
+        return true;
+    }
 
-        return count == numCourses;
+    public boolean dfs(List<List<Integer>> graph, int node, boolean visited[], boolean recStack[]) {
+        visited[node] = true;
+        recStack[node] = true;
+
+        for (int neighbour : graph.get(node)) {
+            if (!visited[neighbour]) {
+                if (dfs(graph, neighbour, visited, recStack)) {
+                    return true;
+                }
+            } else if (recStack[neighbour]) {
+                return true;
+            }
+        }
+        recStack[node] = false;
+        return false;
+
     }
 }
