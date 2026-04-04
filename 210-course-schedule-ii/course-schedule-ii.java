@@ -1,40 +1,35 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
         Queue<Integer> queue = new LinkedList<>();
-        int indegre[] = new int[numCourses];
-        int order[] = new int[numCourses];
-        List<List<Integer>> adj = new ArrayList<>();
+        int indegree[] = new int[numCourses];
+        int result[] = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            adj.add(new ArrayList<>());
-
+            graph.add(new ArrayList<>());
         }
-        for (int pre[] : prerequisites) {
-            int courses = pre[0];
-            int prerequisite = pre[1];
-            adj.get(prerequisite).add(courses);
-            indegre[courses]++;
-
+        for (int edge[] : prerequisites) {
+            int u = edge[0];
+            int v = edge[1];
+            indegree[u]++;
+            graph.get(v).add(u);
         }
+
         for (int i = 0; i < numCourses; i++) {
-            if (indegre[i] == 0) {
+            if (indegree[i] == 0)
                 queue.offer(i);
-            }
         }
-
-        int count = 0;
+        int index = 0;
         while (!queue.isEmpty()) {
             int node = queue.poll();
-            order[count++] = node;
-
-            for (int neighbour : adj.get(node)) {
-                indegre[neighbour]--;
-                if (indegre[neighbour] == 0) {
+            result[index] = node;
+            index++;
+            for (int neighbour : graph.get(node)) {
+                indegree[neighbour]--;
+                if (indegree[neighbour] == 0)
                     queue.offer(neighbour);
-                }
             }
         }
-
-        return count == numCourses ? order : new int[0];
-
+        if(index != numCourses) return new int[0];
+        return result;
     }
 }
