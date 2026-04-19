@@ -19,10 +19,8 @@ class Solution {
     }
     public int getHeight(TreeNode root){
         if(root == null) return 0;
-
         int leftSubtree = getHeight(root.left);
         int rightSubtree = getHeight(root.right);
-
         return 1 + Math.max(leftSubtree,rightSubtree);
     }
 }
