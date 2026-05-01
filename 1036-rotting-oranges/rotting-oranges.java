@@ -1,50 +1,42 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int n = grid.length; 
-        int m = grid[0].length; 
-        int freshCount = 0; 
         Queue<int[]> queue = new LinkedList<>();
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int freshCount = 0;
+        int timing = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    queue.offer(new int[] { i, j });
+                }
                 if (grid[i][j] == 1) {
                     freshCount++;
-                } else if (grid[i][j] == 2) {
-                    queue.offer(new int[]{i, j});
                 }
             }
         }
-
-        if (freshCount == 0) return 0;
-
-        int time = 0;
-        int[][] directions = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} }; 
-
-        while (!queue.isEmpty()) {
+        int direction[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+        while (!queue.isEmpty() && freshCount > 0) {
             int size = queue.size();
-            boolean rotted = false;
-
             for (int i = 0; i < size; i++) {
-                int[] rottenLoc = queue.poll();
-                int row = rottenLoc[0];
-                int col = rottenLoc[1];
+                int currDir[] = queue.poll();
+                int row = currDir[0];
+                int col = currDir[1];
 
-                for (int[] dir : directions) {
-                    int nrow = row + dir[0];
-                    int ncol = col + dir[1];
+                for (int dir[] : direction) {
+                    int newRow = dir[0] + row;
+                    int newCol = dir[1] + col;
 
-                    if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m && grid[nrow][ncol] == 1) {
-                        queue.offer(new int[]{nrow, ncol});
-                        grid[nrow][ncol] = 2; 
-                        freshCount--; 
-                        rotted = true; 
+                    if (newRow >= 0 && newCol >= 0 && newRow < m && newCol < n && grid[newRow][newCol] == 1) {
+                        queue.offer(new int[] { newRow, newCol });
+                        grid[newRow][newCol] = 2;
+                        freshCount--;
                     }
                 }
             }
-
-            if (rotted) time++;
+            timing++;
         }
 
-        return (freshCount == 0) ? time : -1;
+        return freshCount == 0 ? timing : -1;
     }
 }
