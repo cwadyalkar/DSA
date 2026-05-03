@@ -1,60 +1,54 @@
+import java.util.*;
+
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        HashSet<String> set = new HashSet<>(wordList);
-        if (!set.contains(endWord)) {
-            return 0;
+
+        HashMap<String, Boolean> map = new HashMap<>();
+
+        for (String str : wordList) {
+            map.put(str, false);
         }
+
+        if (!map.containsKey(endWord)) return 0;
 
         Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
-        if (set.contains(beginWord)) {
-            set.remove(beginWord);
-        }
+        map.put(beginWord, true);
 
-        int level = 1;
+        int step = 1;
 
         while (!queue.isEmpty()) {
-            int currentLevelSize = queue.size();
-            for (int i = 0; i < currentLevelSize; i++) {
-                String node = queue.poll();
+            int size = queue.size();
 
-                if (node.equals(endWord)) {
-                    return level;
-                }
+            for (int i = 0; i < size; i++) {
+                String word = queue.poll();
 
-                List<String> neighbours = getNeighbours(node, set);
-                for (String word : neighbours) {
-                    if (set.contains(word)) {
-                        queue.offer(word);
-                        set.remove(word);
+                if (word.equals(endWord)) return step;
+
+                char[] arr = word.toCharArray();
+
+                for (int j = 0; j < arr.length; j++) {
+                    char original = arr[j];
+
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        if (ch == original) continue;
+
+                        arr[j] = ch;
+                        String newStr = new String(arr);
+
+                        if (map.containsKey(newStr) && !map.get(newStr)) {
+                            queue.offer(newStr);
+                            map.put(newStr, true);
+                        }
                     }
+
+                    arr[j] = original;
                 }
             }
-            level++;
+
+            step++;
         }
-        return 0;
-    }
 
-    public List<String> getNeighbours(String word, HashSet<String> set) {
-        List<String> neighbours = new ArrayList<>();
-        char[] wordArray = word.toCharArray();
-
-        for (int i = 0; i < word.length(); i++) {
-            char originalChar = wordArray[i];
-
-            for (char ch = 'a'; ch <= 'z'; ch++) {
-                if (ch == originalChar)
-                    continue;
-
-                wordArray[i] = ch;
-                String newWord = new String(wordArray);
-
-                if (set.contains(newWord)) {
-                    neighbours.add(newWord);
-                }
-            }
-            wordArray[i] = originalChar;
-        }
-        return neighbours;
+        return 0; 
     }
 }
