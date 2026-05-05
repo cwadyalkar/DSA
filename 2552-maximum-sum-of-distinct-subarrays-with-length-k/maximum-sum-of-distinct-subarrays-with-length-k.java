@@ -10,14 +10,16 @@ class Solution {
             sum = sum + nums[end];
 
             if (end - start + 1 > k) {
-                map.put(nums[start], map.get(nums[start]) - 1);
-                if (map.get(nums[start]) == 0) {
+                int freq = map.get(nums[start]) - 1;
+                if (freq == 0) {
                     map.remove(nums[start]);
+                } else {
+                    map.put(nums[start], freq);
                 }
                 sum = sum - nums[start];
                 start++;
             }
-            
+
             if (end - start + 1 == k && map.size() == k) {
                 maxSum = Math.max(sum, maxSum);
             }
