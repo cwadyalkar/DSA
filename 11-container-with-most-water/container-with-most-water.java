@@ -1,23 +1,19 @@
 class Solution {
     public int maxArea(int[] height) {
-        int n = height.length;
-        int left = 0;
-        int right = n - 1;
-        int max = Integer.MIN_VALUE;
-
-        while(left < right){
-            int area = Math.min(height[left],height[right]) * (right - left);
-            max = Math.max(max,area);
-            if(height[left] < height[right]){
-                left++;
-            }else if(height[right] < height[left]){
-                right--;
+        int i = 0;
+        int j = height.length - 1;
+        int maxAmount = Integer.MIN_VALUE;
+        while(i < j){
+            int heightOfLine = Math.min(height[i],height[j]);
+            int widthOfLine = j - i;
+            int area = heightOfLine * widthOfLine;
+            maxAmount = Math.max(maxAmount,area);
+            if(height[i] <= height[j]){
+                i++;
             }else{
-                left++;
-                right--;
+                j--;
             }
         }
-
-        return max;
+        return maxAmount;
     }
 }
