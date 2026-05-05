@@ -2,7 +2,7 @@ class Solution {
     public int maxArea(int[] height) {
         int i = 0;
         int j = height.length - 1;
-        int maxAmount = Integer.MIN_VALUE;
+        int maxAmount = 0;
         while(i < j){
             int heightOfLine = Math.min(height[i],height[j]);
             int widthOfLine = j - i;
