@@ -1,16 +1,16 @@
 class Solution {
-    public boolean check(int[] nums) {
-        int n = nums.length;
+    public boolean check(int[] arr) {
+        int n = arr.length;
         int count = 0;
-        for(int i = 0;i < nums.length - 1;i++){
-            if(nums[i] > nums[i + 1]){
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
                 count++;
             }
         }
-        if(nums[0] < nums[n-1]){
-                count++;
+        if (arr[0] < arr[n - 1]) {
+            count++;
         }
-    
-        return count > 1 ? false : true;
+
+        return count <= 1 ? true : false;
     }
 }
